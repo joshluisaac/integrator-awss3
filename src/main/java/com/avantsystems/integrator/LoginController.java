@@ -6,22 +6,45 @@ import org.springframework.web.bind.annotation.*;
 @Controller
 public class LoginController {
 
-
-    //@RequestMapping(value="/login",method = RequestMethod.POST)
-    @GetMapping(value = "/login")
-    public String login(){
-
-        return "login";
+    @GetMapping("/")
+    public String home1() {
+        return "/home";
     }
 
+    @GetMapping("/home")
+    public String home() {
+        return "/home";
+    }
 
-    @GetMapping(value = "/login1")
+    @GetMapping("/admin")
+    public String admin() {
+        return "/admin";
+    }
+
+    @GetMapping("/user")
+    public String user() {
+        return "/user";
+    }
+
+    @GetMapping("/about")
+    public String about() {
+        return "/about";
+    }
+
+    @GetMapping("/login")
+    public String login() {
+        return "/login";
+    }
+
+    @GetMapping("/403")
+    public String error403() {
+        return "/error/403";
+    }
+
+    @GetMapping(value = "dashboard")
     @ResponseBody
-    public String login2(){
-
-        return "from login response";
+    public String dashboard(){
+        return "Dashboard";
     }
-
-
 
 }

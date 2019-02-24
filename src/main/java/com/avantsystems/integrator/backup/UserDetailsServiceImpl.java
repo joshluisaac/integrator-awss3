@@ -1,13 +1,14 @@
-package com.avantsystems.integrator.security;
+package com.avantsystems.integrator.backup;
 
 
+import com.avantsystems.integrator.security.User;
+import com.avantsystems.integrator.security.UserDao;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
-import sun.plugin2.message.Message;
 
 import java.text.MessageFormat;
 import java.util.ArrayList;
@@ -15,7 +16,7 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.stream.Stream;
 
-@Service
+//@Service
 public class UserDetailsServiceImpl implements UserDetailsService {
 
     private UserDao userDao;

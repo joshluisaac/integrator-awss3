@@ -6,14 +6,11 @@ create table avant_user
   enabled           int not null 
 ) ;
 
-
-
 create table avant_role
 (
   role_id   bigint not null,
   role_name varchar(30) not null
 ) ;
-
 
 create table avant_user_role
 (
@@ -22,10 +19,7 @@ create table avant_user_role
   role_id bigint not null
 );
 
-
-
 create table avant_persistent_logins (
- 
     username varchar(64) not null,
     series varchar(64) not null,
     token varchar(64) not null,
@@ -33,7 +27,6 @@ create table avant_persistent_logins (
     primary key (series)
      
 );
-
 
 insert into avant_user (user_id, user_name, encryted_password, enabled)
 values (2, 'dbuser1', '$2a$10$PrI5Gk9L.tSZiW9FXhTS8O8Mz9E97k2FZbFvGFFaSsiTUIl.TCrFu', 1);
