@@ -1,70 +1,57 @@
 package com.avantsystems.integrator.security;
 
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.http.HttpMethod;
+import org.springframework.security.authentication.AuthenticationProvider;
+import org.springframework.security.authentication.dao.DaoAuthenticationProvider;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 
 @Configuration
 @EnableWebSecurity
 public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 
-    @Override
-    protected void configure(HttpSecurity httpSec) throws Exception {
+    private static final Logger LOG = LoggerFactory.getLogger(WebSecurityConfig.class);
 
-        httpSec.csrf().disable();
-        httpSec
-                .authorizeRequests()
-                .antMatchers("/","/login","/logout","/about").permitAll();
+    @Autowired
+    UserDetailsServiceImpl userDetailsService;
 
-        //pages that requires USER and ADMIN roles
-        httpSec.authorizeRequests().antMatchers("/user").access("hasAnyRole('USER', 'ADMIN')");
-
-        httpSec.authorizeRequests().antMatchers("/dashboard").hasAnyRole("USER","ADMIN");
-
-        //pages that requires ADMIN role
-        httpSec.authorizeRequests().antMatchers("/admin").hasAuthority("ADMIN");
-
-        //httpSec.authorizeRequests().antMatchers(HttpMethod.GET,"/admin").hasAuthority("");
-
-        //when an authorized user tries accessing a page outside his/her policy, render access denied
-        //httpSec.authorizeRequests().and().exceptionHandling().accessDeniedPage("/403");
-
-
-        httpSec.authorizeRequests()
-                //configure login page
-                .and()
-                .formLogin().defaultSuccessUrl("/dashboard")
-                //.permitAll()
-                //.loginPage("/login")
-
-                //configure logout
-                .and()
-                .logout();
-                //.permitAll();
-                //.logoutUrl("/logout").logoutSuccessUrl("/logoutSuccessful");
+    @Bean
+    public BCryptPasswordEncoder passwordEncoder(){
+        LOG.info("Loaded password encoding service");
+        return new BCryptPasswordEncoder();
     }
 
 
+
+    //@Override
+    protected void configurex(HttpSecurity httpSec) throws Exception {
+        httpSec.csrf().disable();
+    }
+
+
+    //method 1
     @Override
     public void configure(AuthenticationManagerBuilder auth) throws Exception{
-        System.out.println("Authen...");
+        LOG.info("Loaded user details service");
+        auth.userDetailsService(userDetailsService).passwordEncoder(passwordEncoder());
+    }
 
 
-        auth.inMemoryAuthentication()
-                .withUser("joshua@avantsystems.com.au").password("{noop}password").roles("USER")
-                .and()
-                .withUser("admin@avantsystems.com.au").password("{noop}password").roles("ADMIN")
-                .and()
-                .withUser("info@avantsystems.com.au").password("{noop}password").roles("USER");
-
-
-
+    //Method 2
+    public AuthenticationProvider authenticationProvider(){
+        DaoAuthenticationProvider authProvider = new DaoAuthenticationProvider();
+        authProvider.setPasswordEncoder(passwordEncoder());
+        authProvider.setUserDetailsService(userDetailsService);
+        return authProvider;
     }
 
 

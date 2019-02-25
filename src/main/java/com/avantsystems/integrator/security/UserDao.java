@@ -10,7 +10,7 @@ import org.springframework.transaction.annotation.Transactional;
 import javax.sql.DataSource;
 
 @Repository
-@Transactional
+@Transactional(readOnly = true)
 public class UserDao extends JdbcDaoSupport {
 
     public static final Logger LOG = LoggerFactory.getLogger(UserDao.class);
