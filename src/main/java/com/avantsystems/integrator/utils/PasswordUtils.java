@@ -1,4 +1,4 @@
-package com.avantsystems.integrator.security;
+package com.avantsystems.integrator.utils;
 
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 

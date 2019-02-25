@@ -9,14 +9,14 @@ import java.security.Principal;
 public class LoginController {
 
 
-    @GetMapping("/")
-    public String home() {
+    @GetMapping(value={"/","/login"})
+    public String login() {
         return "login";
     }
 
-    @GetMapping("/login")
-    public String login() {
-        return "login";
+    @GetMapping("/register")
+    public String register() {
+        return "register";
     }
 
 
