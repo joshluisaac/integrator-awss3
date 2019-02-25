@@ -32,9 +32,21 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 
 
 
-    //@Override
-    protected void configurex(HttpSecurity httpSec) throws Exception {
-        httpSec.csrf().disable();
+    @Override
+    protected void configure(HttpSecurity http) throws Exception {
+        http.csrf().disable();
+        http.authorizeRequests()
+                .antMatchers("/").permitAll()
+                .antMatchers("/login").permitAll()
+                .antMatchers("/registration").permitAll()
+                .and()
+                .formLogin()
+                .loginPage("/login")
+                .usernameParameter("email").passwordParameter("password")
+                .defaultSuccessUrl("/user")
+                .failureUrl("/login?error=true");
+
+
     }
 
 

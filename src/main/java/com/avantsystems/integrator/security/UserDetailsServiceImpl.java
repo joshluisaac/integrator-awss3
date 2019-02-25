@@ -4,12 +4,10 @@ import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
-import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 
-import java.text.MessageFormat;
+
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 import java.util.Optional;
 
@@ -17,8 +15,8 @@ import java.util.Optional;
 @Service
 public class UserDetailsServiceImpl implements UserDetailsService {
 
-    UserDao userDao;
-    RoleDao roleDao;
+    private UserDao userDao;
+    private RoleDao roleDao;
 
 
     public UserDetailsServiceImpl(UserDao userDao, RoleDao roleDao){
@@ -27,11 +25,11 @@ public class UserDetailsServiceImpl implements UserDetailsService {
     }
 
     @Override
-    public UserDetails loadUserByUsername(String userName) throws UsernameNotFoundException {
+    public UserDetails loadUserByUsername(String userName) {
         Optional<User> maybeUser = Optional.ofNullable(userDao.findUser(userName));
-        User user = maybeUser.orElse(new User(new Long(-888),"username","password"));
+        User user = maybeUser.orElse(new User(Long.valueOf(-888),"username","password"));
         List<String> roles = getRoles(user.getUserId());
-        List<GrantedAuthority> grantedAuthorities = new ArrayList<GrantedAuthority>();
+        List<GrantedAuthority> grantedAuthorities = new ArrayList<>();
 
         for (String role : roles) {
             grantedAuthorities.add(new SimpleGrantedAuthority(role));
