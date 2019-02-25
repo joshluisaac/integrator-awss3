@@ -30,7 +30,7 @@ public class UserDetailsServiceImpl implements UserDetailsService {
     public UserDetails loadUserByUsername(String userName) throws UsernameNotFoundException {
         Optional<User> maybeUser = Optional.ofNullable(userDao.findUser(userName));
         User user = maybeUser.orElse(new User(new Long(-888),"username","password"));
-        List<String> roles = getRoles();
+        List<String> roles = getRoles(user.getUserId());
         List<GrantedAuthority> grantedAuthorities = new ArrayList<GrantedAuthority>();
 
         for (String role : roles) {
@@ -40,7 +40,7 @@ public class UserDetailsServiceImpl implements UserDetailsService {
     }
 
 
-    public List<String> getRoles(){
-        return new ArrayList<>(Arrays.asList("ROLE_ADMIN","ROLE_USER"));
+    public List<String> getRoles(Long userId){
+        return roleDao.getUserRoles(userId);
     }
 }
