@@ -33,7 +33,7 @@ public class LoginController {
         System.out.println(session.getLastAccessedTime());
         System.out.println(session.getMaxInactiveInterval());
         System.out.println(session.getAttributeNames().toString());
-        System.out.println("Authentication type: " + HttpStatus.);
+
 
 
         return principal;
