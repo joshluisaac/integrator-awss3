@@ -1,8 +1,13 @@
-package com.avantsystems.integrator;
+package com.avantsystems.integrator.security;
 
+
+import org.eclipse.jetty.http.HttpStatus;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 import java.security.Principal;
 
 @Controller
@@ -14,12 +19,6 @@ public class LoginController {
         return "login";
     }
 
-    @GetMapping("/register")
-    public String register() {
-        return "register";
-    }
-
-
     @GetMapping("/admin")
     @ResponseBody
     public Principal admin(Principal principal) {
@@ -28,7 +27,15 @@ public class LoginController {
 
     @GetMapping("/user")
     @ResponseBody
-    public Principal user(Principal principal) {
+    public Principal user(Principal principal, HttpSession session, HttpServletRequest req, HttpServletResponse res) {
+        System.out.println(session.getId());
+        System.out.println(session.getCreationTime());
+        System.out.println(session.getLastAccessedTime());
+        System.out.println(session.getMaxInactiveInterval());
+        System.out.println(session.getAttributeNames().toString());
+        System.out.println("Authentication type: " + HttpStatus.);
+
+
         return principal;
     }
 

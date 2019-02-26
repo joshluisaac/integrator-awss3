@@ -9,6 +9,6 @@ public class PasswordUtils {
     }
 
     public static void main(String[] args) {
-        System.out.println(new PasswordUtils().encodePassword("joshua"));
+        System.out.println(new PasswordUtils().encodePassword("password"));
     }
 }

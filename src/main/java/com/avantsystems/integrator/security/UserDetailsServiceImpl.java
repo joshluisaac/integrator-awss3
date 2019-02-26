@@ -28,17 +28,17 @@ public class UserDetailsServiceImpl implements UserDetailsService {
     public UserDetails loadUserByUsername(String userName) {
         Optional<User> maybeUser = Optional.ofNullable(userDao.findUser(userName));
         User user = maybeUser.orElse(new User(Long.valueOf(-888),"username","password"));
-        List<String> roles = getRoles(user.getUserId());
-        List<GrantedAuthority> grantedAuthorities = new ArrayList<>();
+        List<String> roles = getUserRoles(user.getUserId());
+        List<GrantedAuthority> userGrantedAuthorities = new ArrayList<>();
 
         for (String role : roles) {
-            grantedAuthorities.add(new SimpleGrantedAuthority(role));
+            userGrantedAuthorities.add(new SimpleGrantedAuthority(role));
         }
-        return new org.springframework.security.core.userdetails.User(user.getUserName(), user.getEncrytedPassword(),grantedAuthorities);
+        return new org.springframework.security.core.userdetails.User(user.getUserName(), user.getEncrytedPassword(),userGrantedAuthorities);
     }
 
 
-    public List<String> getRoles(Long userId){
+    public List<String> getUserRoles(Long userId){
         return roleDao.getUserRoles(userId);
     }
 }
