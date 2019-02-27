@@ -1,7 +1,6 @@
 package com.avantsystems.integrator.security;
 
 
-import org.owasp.encoder.Encode;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestParam;

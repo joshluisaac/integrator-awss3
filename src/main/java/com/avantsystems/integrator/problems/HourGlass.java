@@ -1,11 +1,11 @@
 package com.avantsystems.integrator.problems;
 
-import java.util.Arrays;
+import java.util.ArrayList;
+import java.util.List;
 
 public class HourGlass {
 
-    //int[][] input = new int[6][6];
-    public static final int[][] rawArr  = {
+    private static final int[][] matrix  = {
             {-9, -9, -9,  1, 1, 1},
             { 0, -9,  0,  4, 3, 2},
             {-9, -9, -9,  1, 2, 3},
@@ -14,19 +14,21 @@ public class HourGlass {
             {0,  0,  1,  2, 4, 0}
     };
 
+    private List<Integer> sumList = new ArrayList<>();
 
-    void process(){
 
-        for (int i = 0; i < rawArr.length; i++){
-            int[] row  = rawArr[i];
-            //System.out.println(Arrays.toString(row));
 
-            for (int j = 0; j < row.length; j++) {
-                int element = rawArr[i][j];
-                System.out.println(element);
+    public void process(){
+        for (int i = 0; i < 4; i++){
+            for (int j = 0; j < 4; j++) {
+               int sum =  matrix[i][j] + matrix[i][j + 1] + matrix[i][j + 2] + matrix[i + 1][j + 1] + matrix[i + 2][j]
+                       + matrix[i + 2][j + 1] + matrix[i + 2][j + 2];
+
+               sumList.add(Integer.valueOf(sum));
+
             }
         }
-
+        System.out.println(sumList.toString());
     }
 
     public static void main(String[] args) {
