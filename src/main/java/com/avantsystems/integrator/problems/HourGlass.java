@@ -30,7 +30,7 @@ public class HourGlass {
 
                if (sum > maxIntVal) {
                    maxIntVal = sum;
-               }
+               }                                                                                              
                sumList.add(Integer.valueOf(sum));
             }
         }

@@ -9,6 +9,7 @@ import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
+import java.util.Optional;
 
 public class HttpAccessDeniedHandler implements AccessDeniedHandler {
 
@@ -16,7 +17,11 @@ public class HttpAccessDeniedHandler implements AccessDeniedHandler {
     @Override
     public void handle(HttpServletRequest req, HttpServletResponse res, AccessDeniedException e) throws IOException, ServletException {
 
-        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+        //Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+
+        Optional<Authentication> maybeAuth = Optional.ofNullable(SecurityContextHolder.getContext().getAuthentication());
+
+        //maybeAuth.orElse()
 
     }
 }
